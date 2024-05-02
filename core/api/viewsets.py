@@ -4,6 +4,7 @@ from rest_framework.viewsets import ModelViewSet
 from core.models import PontoTuristico
 from .serializers import PontoTuristicoSerializer
 
+# Fez todas as operações do crud
 # é a implementação de um viewset que apenas define um queryset e um serialize
 class PontoTuristicoViewSet(ModelViewSet):
     """
