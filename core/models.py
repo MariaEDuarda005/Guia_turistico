@@ -17,6 +17,10 @@ class PontoTuristico(models.Model):
 
     # upload_to - pasta onde vai fazer o upload da imagem 
 
+    @property
+    def descricao_completa2(self):
+        return '%s + %s' % (self.nome, self.descricao)
+
     def __str__(self):
         return self.nome
 

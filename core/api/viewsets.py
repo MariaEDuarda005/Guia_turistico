@@ -30,6 +30,25 @@ class PontoTuristicoViewSet(ModelViewSet):
     # }
 
     permission_classes = (IsAuthenticated, ) # solicitar que para fazer a autenticação - pode ser qualquer um desses IsAuthenticated, IsAdminUser
+    
+    # https://www.django-rest-framework.org/api-guide/permissions/
+    
+    # 'permission_classes' permite você setar permissões para cada endPoint
+    # no caso estamos pedindo que o usuário no minimo esteja autenticado.
+    
+    # AllowAny - permitirá acesso irrestrito
+    
+    # IsAuthenticated - Vai negar acesso a qualquer usuário não autenticado
+    
+    # IsAdminUser - vai negar acesso a qualquer usuário que não tenha o 'is_staff' como 'true'
+
+    # IsAuthenticatedOrReadOnly - permitirá que usuários autenticados executem qualquer solicitação.
+    # Solicitações para usuários não autenticados somente serão permitidas se o método de solicitação for um dos métodos “seguros” por exemplo um 'GET'
+    # só permitira você ver as informações caso não autenticado
+
+    # DjangoModelPermissions - Ele mostra um resultado porem não autoriza que você faça alguma ação se não tiver a permissão especifica para aquele método ou tabela
+    # O próprio django ja ve as opções que o seu backend possuem e ja cria um sistema de permissões para os usuários só precisa definir
+
     authentication_classes = (TokenAuthentication,)
 
     # endereco__linha1 - fazendo referencia a outra classe
