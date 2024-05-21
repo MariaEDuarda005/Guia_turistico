@@ -6,6 +6,7 @@ from enderecos.api.serializers import EnderecoSerializer
 from avaliacoes.api.serializers import AvaliacaoSerializer
 from comentarios.api.serializers import ComentarioSerializer
 from atracoes.models import Atracao
+from enderecos.models import Endereco
 
 # Define o model e os campos que eu quero que exiba, apenas a representação do dado
 class PontoTuristicoSerializer(ModelSerializer):
@@ -17,7 +18,7 @@ class PontoTuristicoSerializer(ModelSerializer):
 
     # descricao_completa = SerializerMethodField()
 
-    # read_only -> Os campos não vão ser mais obrigatorios, APENA SPARA LEITURA 
+    # read_only -> Os campos não vão ser mais obrigatorios, APENAS PARA LEITURA 
 
     class Meta:
         model = PontoTuristico
@@ -35,6 +36,13 @@ class PontoTuristicoSerializer(ModelSerializer):
     def create(self, validated_data):
         atracoes = validated_data["atracoes"]
         del validated_data['atracoes']
+
+        endereco = validated_data["endereco"]
+        del validated_data['endereco']
+
+        end = Endereco.objects.create(**endereco)
+        ponto.endereco = end
+
         ponto = PontoTuristico.objects.create(**validated_data) # ** o proprio python vai interar nesta lista chave valor, ela é de duas dimensoes, por isso 2 asteriscos e automaticamente pegar atributo por atributo e criar o ponto 
         self.cria_atracoes(atracoes, ponto)
 
