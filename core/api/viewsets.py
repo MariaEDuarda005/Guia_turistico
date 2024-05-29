@@ -7,6 +7,8 @@ from .serializers import PontoTuristicoSerializer
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.authentication import TokenAuthentication
+from django.http import HttpResponse
+
 
 # Fez todas as operações do crud, conjunção de varias outras classes
 # é a implementação de um viewset que apenas define um queryset e um serialize
@@ -114,3 +116,14 @@ class PontoTuristicoViewSet(ModelViewSet):
     @action(methods=['get'], detail=False)
     def teste(self, request):
         pass
+
+    # atrelar os objetos
+    @action(methods=['post'], detail=True)
+    def associa_atracoes(self, request, pk=None):
+        atracoes = request.data['ids']
+        
+        ponto = self.get_object()  # Obtenha o objeto PontoTuristico associado ao 'pk'
+        ponto.atracoes.set(atracoes)
+        ponto.save()
+        
+        return Response('Ok!')
